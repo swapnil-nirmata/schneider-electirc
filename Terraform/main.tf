@@ -15,15 +15,15 @@ provider "nirmata" {
   # Nirmata address.
   url = "https://nirmata.io"
 
-  // Nirmata API Key. Also configurable using the environment variable NIRMATA_TOKEN.
+  # Nirmata API Key. Also configurable using the environment variable NIRMATA_TOKEN.
   token = "API-TOKEN-FROM-NIRMATA"
 
 }
 resource "nirmata_cluster_registered" "aks-registered" {
-  // Name of the cluster to be created in Nirmata
+  # Name of the cluster to be created in Nirmata
   name         = "cluster-name"
 
-  // Nmae of Cluster Type created in Nirmata
+  # Nmae of Cluster Type created in Nirmata
   cluster_type = "cluster-typ-name"
 }
 
@@ -34,10 +34,10 @@ provider "azurerm" {
 
 data "azurerm_kubernetes_cluster" "cluster" {
 
-  // Nmae of the cluster in Azure
+  # Nmae of the cluster in Azure
   name                = "cluster-name-in-Azure"
 
-  // Name of rescource group created in Azure
+  # Name of rescource group created in Azure
   resource_group_name = "resource-group-name-in-Azure"
 }
 
@@ -54,7 +54,7 @@ data "kubectl_filename_list" "manifests" {
   pattern = "${nirmata_cluster_registered.aks-registered.controller_yamls_folder}/*"
 }
 
-// apply the controller YAMLs
+# Apply the controller YAMLs
 resource "kubectl_manifest" "test" {
   count     = nirmata_cluster_registered.aks-registered.controller_yamls_count
   yaml_body = file(element(data.kubectl_filename_list.manifests.matches, count.index))
